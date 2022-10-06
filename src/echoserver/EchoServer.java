@@ -19,7 +19,8 @@ public class EchoServer {
       
               OutputStream out = client.getOutputStream();
               InputStream in = client.getInputStream();
-
+              
+              // Read data until no more is avaialble
               while (true) {
                 int data = in.read();
 
@@ -30,6 +31,7 @@ public class EchoServer {
                 out.write(data);
               }
 
+              // Flush to output just to be sure
               out.flush();
 
               // Close the output
