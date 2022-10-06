@@ -22,7 +22,8 @@ public class EchoClient {
 
       InputStream in = socket.getInputStream();
       OutputStream out = socket.getOutputStream();
-
+      
+      // Loop over the input, sending it to the server
       while (true) {
         int data = System.in.read();
 
@@ -31,7 +32,6 @@ public class EchoClient {
         }
 
         out.write(data);
-        out.flush();
 
         data = in.read();
 
@@ -40,12 +40,13 @@ public class EchoClient {
         }
 
         System.out.write(data);
-        System.out.flush();
       }
 
+      // Flush the output and tell the server we are done
       out.flush();
       socket.shutdownOutput();
 
+      // Wait for any remaining data to be recieved
       while (true) {
         int data = in.read();
 
@@ -56,6 +57,10 @@ public class EchoClient {
         System.out.write(data);
       }
 
+      // Make sure we flush that data to stdout
+      System.out.flush();
+
+      // Tell the server we are done listening
       socket.shutdownInput();
 
       // Close the socket when we're done reading from it
